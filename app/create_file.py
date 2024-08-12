@@ -16,12 +16,13 @@ def create_file(file_path: str) -> None:
 
     with open(file_path, mode) as f:
         current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        f.write(f"\n{current_time}\n")
+        f.write(f"{current_time}\n")
 
         lines_count = 1
         while True:
             content = input("Enter content line: ")
             if content.lower() == "stop":
+                f.write("\n")
                 break
 
             f.write(f"{lines_count} {content}\n")
