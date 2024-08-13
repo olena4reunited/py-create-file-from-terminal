@@ -6,7 +6,7 @@ import os
 def create_directory(directory_name: str) -> None:
     os.makedirs(directory_name, exist_ok=True)
 
-  
+
 def create_file(file_path: str) -> None:
     mode = "a"
 
@@ -26,10 +26,23 @@ def create_file(file_path: str) -> None:
 
 
 def main() -> None:
-    parser = ArgumentParser(description="Create directories and files with timestamps and user input")
+    parser = ArgumentParser(
+        description="Create directories and files with user input"
+    )
 
-    parser.add_argument("-d", "--directory", nargs="+", help='Create directory in current directory', type=str)
-    parser.add_argument("-f", "--file", help="Create file in current directory", type=str)
+    parser.add_argument(
+        "-d",
+        "--directory",
+        nargs="+",
+        help="Create directory in current directory",
+        type=str
+    )
+    parser.add_argument(
+        "-f",
+        "--file",
+        help="Create file in current directory",
+        type=str
+    )
 
     args = parser.parse_args()
 
