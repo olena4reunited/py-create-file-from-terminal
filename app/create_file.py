@@ -3,10 +3,6 @@ from datetime import datetime
 import os
 
 
-def create_directory(directory_name: str) -> None:
-    os.makedirs(directory_name, exist_ok=True)
-
-
 def create_file(file_path: str) -> None:
     mode = "a"
 
@@ -48,7 +44,7 @@ def main() -> None:
 
     if args.directory:
         directory_path = os.path.join(*args.directory)
-        create_directory(directory_path)
+        os.makedirs(directory_path, exist_ok=True)
 
     if args.file:
         if args.directory:
