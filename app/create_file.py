@@ -1,18 +1,14 @@
+from argparse import ArgumentParser
 from datetime import datetime
 import os
-import sys
 
 
 def create_directory(directory_name: str) -> None:
-    path = os.path.join(*directory_name)
-    os.makedirs(path, exist_ok=True)
+    os.makedirs(directory_name, exist_ok=True)
 
-
+  
 def create_file(file_path: str) -> None:
-    if os.path.exists(file_path):
-        mode = "a"
-    else:
-        mode = "w"
+    mode = "a"
 
     with open(file_path, mode) as f:
         current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -30,26 +26,24 @@ def create_file(file_path: str) -> None:
 
 
 def main() -> None:
-    args = sys.argv
+    parser = ArgumentParser(description="Create directories and files with timestamps and user input")
 
-    if "-d" in args:
-        d_index = args.index("-d")
-        directory_name = args[d_index + 1:]
-        if "-f" in args:
-            f_index = args.index("-f")
-            file_name = args[f_index + 1]
+    parser.add_argument("-d", "--directory", nargs="+", help='Create directory in current directory', type=str)
+    parser.add_argument("-f", "--file", help="Create file in current directory", type=str)
 
-            directory_name = args[d_index + 1:f_index]
-            create_directory(directory_name)
+    args = parser.parse_args()
 
-            file_path = os.path.join(*directory_name, file_name)
-            create_file(file_path)
+    if args.directory:
+        directory_path = os.path.join(*args.directory)
+        create_directory(directory_path)
+
+    if args.file:
+        if args.directory:
+            file_path = os.path.join(directory_path, args.file)
         else:
-            create_directory(directory_name)
-    elif "f" in args:
-        f_index = args.index("-f")
-        file_name - args[f_index + 1]
-        create_file(file_name)
+            file_path = args.file
+
+        create_file(file_path)
 
 
 if __name__ == "__main__":
